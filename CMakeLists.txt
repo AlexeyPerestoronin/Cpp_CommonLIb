@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1.0)
 
-set(PROJECT_CPP_STANDART "cxx_std_11")
+set(PROJECT_CPP_STANDART "cxx_std_17")
 set(PROJECT_NAME "CommonLib")
 set(LIB_NAME "common")
 

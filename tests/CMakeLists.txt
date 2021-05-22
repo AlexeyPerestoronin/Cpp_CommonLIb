@@ -12,9 +12,10 @@ include_directories("${gtest_SOURCE_DIR}/include")
 
 include_directories(../src)
 
+file(GLOB TESTS_FILES_HPP "./test-*.hpp")
 file(GLOB TESTS_FILES_CPP "./test-unit-*.cpp")
 
-add_executable(${TESTS_EXE_NAME} ${TESTS_FILES_CPP})
+add_executable(${TESTS_EXE_NAME} ${TESTS_FILES_HPP} ${TESTS_FILES_CPP})
 target_compile_features(${TESTS_EXE_NAME} PRIVATE ${PROJECT_CPP_STANDART})
 target_link_libraries(${TESTS_EXE_NAME} ${LIB_NAME})
 target_link_libraries(${TESTS_EXE_NAME} gtest_main)
