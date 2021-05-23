@@ -72,7 +72,7 @@ namespace Common
       else
         return FormatByIndex<startIndex>(substring).Format<startIndex + 1>(remainSubstrings...);
     }
-  };
 #pragma endregion
+  };
 
 } // namespace Common
