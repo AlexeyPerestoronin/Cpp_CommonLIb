@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.1.0)
 
 include_directories(./)
+include_directories(./advanced_algorithms)
 
 file(GLOB HPP_FILES "./*.hpp")
 file(GLOB CPP_FILES "./*.cpp")
