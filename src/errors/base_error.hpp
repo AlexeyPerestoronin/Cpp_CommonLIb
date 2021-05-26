@@ -19,7 +19,7 @@ namespace Common
     * | C:/.../connect.cpp(342)
     * ```
     */
-    const Str DefaultErrorFormat = "Error:\n|{wnat}\n|{module}\n|{func}\n|{file}({line})";
+    const Str DefaultErrorFormat = "Error:\n|{what}\n|{module}\n|{func}\n|{file}({line})";
 
 
     /**
@@ -90,4 +90,4 @@ namespace Common
 } // namespace Common
 
 #define RAISE_ERROR(module_name, what_happend) \
-throw std::move(Common::Errors::BaseError().SetModule(module_name).SetFile(__FILE__).SetFunc(__FUNCTION__).SetLine(std::to_string(__LINE__)).SetWhat(what_happend))
+throw std::move(Common::Errors::BaseError().SetModule(module_name).SetFile(__FILE__).SetFunc(__FUNCTION__).SetLine(std::to_string(__LINE__)).SetWhat(what_happend));
