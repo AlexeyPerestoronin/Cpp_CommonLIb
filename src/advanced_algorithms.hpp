@@ -10,24 +10,49 @@
 
 #pragma once
 
-#include "advanced_algorithms/_common_aa_include.hpp"
-#include "advanced_algorithms/_find.hpp"
+#include "index_iterator_static.hpp"
+#include "index_iterator.hpp"
+
+#include "errors/base_error.hpp"
+
+#include <algorithm>
+#include <optional>
+
+
+#define AA_RAISE_ERROR(what_happend) \
+  RAISE_ERROR("common.lib:AdvancedAlgorithms", what_happend);
+
 
 namespace Common
 {
   /**
-  * breif: AdvancedAlgorithms with checking of iterating diapason
+  * brief: the class that contains all advanced versions of standard std-algorithms from <algorithm>-include-file
   */
-  using AA = typename AdvancedAlgorithms<true>;
+  namespace AA // Advanced Algorithms
+  {
+    /**
+    * brief: finds element in collection in predefined range - [from, to)
+    * t-param: from - index of start element
+    * t-param: to - index of end element
+    * t-param: isOptionalResult - if true the result is option type; if false - iterator type
+    * param: collection - target collection for find
+    * param: value - desired element
+    * return: if isOptionalResult-flag is true - optional value with desired element; otherwise - iterator to found element or end-iterator
+    * ---
+    * example1: Find(vec, 5) - pass over all container elements
+    * example2: Find<1, -2>(vec, 5) - pass over all container elements excepted first and last elements
+    * example3: Find<-2, -1>(vec, 5) - pass over penultimate and last container elements
+    */
+    template<int64_t from = 0, int64_t to = -1, bool isOptionalResult = true, class Collection, class Action>
+    static decltype(auto) Find(Collection& collection, Action&& value);
 
-  /**
-  * breif: AdvancedAlgorithms without checking of iterating diapason
-  */
-  using AAN = typename AdvancedAlgorithms<false>;
+  } // namespace AA
 
 } // namespace Common
 
 
-// defined in `advanced_algorithms/_common_aa_include.hpp`
+#include "advanced_algorithms/_find.hpp"
+#include "advanced_algorithms/_any.hpp"
+
+
 #undef AA_RAISE_ERROR
-#undef AA_ASSERT_POSITIONS
