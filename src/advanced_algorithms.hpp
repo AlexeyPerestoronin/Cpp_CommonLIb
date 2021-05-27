@@ -43,8 +43,11 @@ namespace Common
     * example2: Find<1, -2>(vec, 5) - pass over all container elements excepted first and last elements
     * example3: Find<-2, -1>(vec, 5) - pass over penultimate and last container elements
     */
+    template<int64_t from = 0, int64_t to = -1, bool isOptionalResult = true, class Collection, class Value>
+    decltype(auto) Find(Collection& collection, Value&& value);
+
     template<int64_t from = 0, int64_t to = -1, bool isOptionalResult = true, class Collection, class Action>
-    static decltype(auto) Find(Collection& collection, Action&& value);
+    decltype(auto) FindIf(Collection& collection, Action&& action);
 
   } // namespace AA
 
