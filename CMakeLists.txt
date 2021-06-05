@@ -14,8 +14,8 @@ endif()
 
 include_directories(./)
 
-file(GLOB HPP_FILES "\./*.hpp" "\./errors/*\.hpp")
-file(GLOB CPP_FILES "\./*.cpp" "\./errors/*\.cpp")
+file(GLOB HPP_FILES "./*.hpp" "./errors/*.hpp" "./advanced_algorithms_coverage/*.hpp" "./manipulating_types/*.hpp")
+file(GLOB CPP_FILES "./*.cpp" "./errors/*.cpp" "./advanced_algorithms_coverage/*.cpp")
 
 add_library(${LIB_NAME} STATIC ${CPP_FILES} ${HPP_FILES})
 target_compile_features(${LIB_NAME} PRIVATE ${PROJECT_CPP_STANDART})
