@@ -23,13 +23,14 @@ namespace Common {
         *    ...
         *   -N = --(...N-3...(--std::end(container)...N-3...)
         */
-        template<bool is_const, int64_t index, class Collection>
+        template<bool is_const, int64_t index, class CollectionType>
         class IndexIteratorStatic {
-            using _MainClassType = typename IndexIteratorStatic<is_const, index, Collection>;
+            using _MainClassType = typename IndexIteratorStatic<is_const, index, CollectionType>;
             PtrCls(_MainClassType);
 
-            using _CollectionType = typename MT::AddConstIfNeed<is_const, Collection>::Value;
+            using _CollectionType = typename MT::AddConstIfNeed<is_const, CollectionType>::Value;
             using _CollectionIteratorType = typename MT::AddConstIfNeed<is_const, typename _CollectionType::iterator, typename _CollectionType::const_iterator>::Value;
+            using _CollectionIteratorValueType = typename MT::AddConstIfNeed<is_const, typename _CollectionIteratorType::value_type>::Value;
 
             private:
             _CollectionIteratorType _it;
@@ -75,11 +76,11 @@ namespace Common {
             }
         }; // class IndexIteratorStatic
 
-        template<int64_t index, class Collection>
-        using IIS = typename IndexIteratorStatic<false, index, Collection>;
+        template<int64_t index, class CollectionType>
+        using IIS = IndexIteratorStatic<false, index, CollectionType>;
 
-        template<int64_t index, class Collection>
-        using CIIS = typename IndexIteratorStatic<true, index, Collection>;
+        template<int64_t index, class CollectionType>
+        using CIIS = IndexIteratorStatic<true, index, CollectionType>;
 
     } // namespace AAC
 

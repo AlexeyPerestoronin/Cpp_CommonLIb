@@ -35,10 +35,10 @@ namespace Common {
         };
 
 #pragma region Get < Begin | End> Iterator
-        template<bool is_need_const, class Collection>
+        template<bool is_need_const, class CollectionType>
         struct GetBeginIterator {
             private:
-            using _CollectionType = typename AddConstIfNeed<is_need_const, Collection>::Value;
+            using _CollectionType = typename AddConstIfNeed<is_need_const, CollectionType>::Value;
             using _CollectionIteratorType = typename AddConstIfNeed<is_need_const, typename _CollectionType::iterator, typename _CollectionType::const_iterator>::Value;
 
             private:
@@ -60,10 +60,10 @@ namespace Common {
             }
         };
 
-        template<bool is_need_const, class Collection>
+        template<bool is_need_const, class CollectionType>
         struct GetEndIterator {
             private:
-            using _CollectionType = typename AddConstIfNeed<is_need_const, Collection>::Value;
+            using _CollectionType = typename AddConstIfNeed<is_need_const, CollectionType>::Value;
             using _CollectionIteratorType = typename AddConstIfNeed<is_need_const, typename _CollectionType::iterator, typename _CollectionType::const_iterator>::Value;
 
             private:

@@ -13,7 +13,6 @@ TEST(IntexIteratorStatic, Test1) {
         constexpr int64_t from = 10;
         constexpr int64_t to = -11;
         Container vec{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-        auto a = vec.begin();
         ASSERT_THROW((IIS<from, Container>(vec)), Common::Errors::BaseError);
         ASSERT_THROW((IIS<to, Container>(vec)), Common::Errors::BaseError);
     }
