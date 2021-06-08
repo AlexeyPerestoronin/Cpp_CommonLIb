@@ -30,3 +30,8 @@
         * [x] template<bool is_optional_result = true, class CollectionType, class CollectionTypeWhere, class... ValuesTypes> decltype(auto) FindEnd(const CIT<CollectionType>& cit, const CIT<CollectionTypeWhere>& cit_what, ValuesTypes&&... values)
         * [x] template<bool is_optional_result = true, class CollectionType, class CollectionTypeWhere, class... ValuesTypes> decltype(auto) FindFirstOf(const CIT<CollectionType>& cit, const CIT<CollectionTypeWhere>& cit_what, ValuesTypes&&... values)
         * [x] template<bool is_optional_result = true, class CollectionType, class... ValuesTypes> decltype(auto) FindAdjacent(const CIT<CollectionType>& cit, ValuesTypes&&... values)
+        ***
+        Here are the implementation of all any-algorithms from SLT by means of applying AAC-Logic to each of them
+        * [x] template<class CollectionType, class UnaryPredicateType> bool AnyOf(const CIT<CollectionType>& cit, UnaryPredicateType&& predicate)
+        * [x] template<class CollectionType, class UnaryPredicateType> bool AllOf(const CIT<CollectionType>& cit, UnaryPredicateType&& predicate)
+        * [x] template<class CollectionType, class UnaryPredicateType> bool NoneOf(const CIT<CollectionType>& cit, UnaryPredicateType&& predicate)
