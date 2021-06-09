@@ -29,6 +29,8 @@ namespace Common {
         * Let us need to find some element between the third and third with the end of the elements of the vec vector.
         * Using the algorithm from STL, we would write like this: `std::find(++(++vec.begin()), --(--vec.end()), element)`
         * Using the algorithm from AAC, we will write like this:  `AAC::Find(MakeCIT(vec, 2, -3), element)`
+        * Note1:
+        * All find-algorithms from AAC are returns ither optional value with the result of searching or the iterator values like an canonical find-algirithm from SLT
         */
 
         // link: http://www.cplusplus.com/reference/algorithm/find/

@@ -35,3 +35,7 @@
         * [x] template<class CollectionType, class UnaryPredicateType> bool AnyOf(const CIT<CollectionType>& cit, UnaryPredicateType&& predicate)
         * [x] template<class CollectionType, class UnaryPredicateType> bool AllOf(const CIT<CollectionType>& cit, UnaryPredicateType&& predicate)
         * [x] template<class CollectionType, class UnaryPredicateType> bool NoneOf(const CIT<CollectionType>& cit, UnaryPredicateType&& predicate)
+        ***
+        Here are the implementation of all search-algorithms from SLT by means of applying AAC-Logic to each of them
+        * [x] template<bool is_bool_result = true, class CollectionTypeWhere, class CollectionTypeWhat> decltype(auto) Search(const CIT<CollectionTypeWhere>& cit_where, const CIT<CollectionTypeWhat>& cit_what)
+        * [x] template<bool is_bool_result = true, class CollectionTypeWhere, class ValueTypeWhat> decltype(auto) SearchN(const CIT<CollectionTypeWhere>& cit_where, uint64_t how_many, const ValueTypeWhat& value_what)

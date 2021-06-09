@@ -6,6 +6,19 @@ namespace Common {
         /**
         * Description:
         * Here are the implementation of all any-algorithms from SLT by means of applying AAC-Logic to each of them.
+        * For example, consider the std::any_of-algorithm vs its advanced implementation - AAC::AnyOf:
+        * (1)
+        * `std::any_of(vec.begin(), vec.end(), some_predicate)`
+        * vs
+        * `AAC::AnyOf(MakeCIT(vec), some_predicate)`
+        * (2)
+        * `std::any_of(++vec.begin(), --vec.end(), some_predicate)`
+        * vs
+        * `AAC::AnyOf(MakeCIT(vec, 1, -2), some_predicate)`
+        * (3)
+        * `std::any_of(++(++vec.begin()), --(--vec.end()), some_predicate)`
+        * vs
+        * `AAC::AnyOf(MakeCIT(vec, 2, -3), some_predicate)`
         */
 
         // link: http://www.cplusplus.com/reference/algorithm/any_of/

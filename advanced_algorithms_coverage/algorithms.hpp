@@ -6,3 +6,4 @@
 
 #include "advanced_algorithms_coverage/_find.hpp"
 #include "advanced_algorithms_coverage/_any.hpp"
+#include "advanced_algorithms_coverage/_search.hpp"
