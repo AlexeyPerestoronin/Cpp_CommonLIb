@@ -1,11 +1,11 @@
 #pragma once
-#include "stdafx.hpp"
+#include <stdafx.h>
 
 namespace parallelization {
     template<class BaseIteratorType>
-    class _Iterator : protected BaseIteratorType {
+    class _BaseIterator : protected BaseIteratorType {
         using base_type = BaseIteratorType;
-        using current_type = _Iterator;
+        using current_type = _BaseIterator;
 
         std::mutex& d_access;
 #define GET_LOCK std::lock_guard<std::mutex> _lock(d_access);
@@ -19,7 +19,7 @@ namespace parallelization {
         // clang-format on
 
         template<class... ArgsTypes>
-        _Iterator(std::mutex& i_access, ArgsTypes&&... i_args)
+        _BaseIterator(std::mutex& i_access, ArgsTypes&&... i_args)
             : d_access{ i_access }
             , base_type(std::forward<ArgsTypes>(i_args)...) {}
 
