@@ -1,4 +1,4 @@
-#include "test-unit-common.hpp"
+#include "test-common.hpp"
 
 #include "advanced_algorithms_coverage/index_transmitter.hpp"
 

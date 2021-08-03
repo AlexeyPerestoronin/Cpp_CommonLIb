@@ -1,4 +1,4 @@
-#include "test-unit-common.hpp"
+#include "test-common.hpp"
 #include "errors/base_error.hpp"
 
 #define RAISE_TEST_ERROR(message) RAISE_ERROR("tests", message)

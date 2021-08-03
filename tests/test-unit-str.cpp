@@ -1,4 +1,4 @@
-#include "test-unit-common.hpp"
+#include "test-common.hpp"
 #include "str.hpp"
 
 using Str = typename Common::Str;
