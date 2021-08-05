@@ -4,7 +4,6 @@
 #include "parallelization/list.h"
 #include "parallelization/optional.h"
 
-
 TEST(Class_sync, Test1) {
     parallelization::sync<std::vector<int>> s_vec{ 1, 2, 3 };
 
@@ -23,6 +22,17 @@ TEST(Class_sync, Test1) {
         s_vec.invoke<const int& (std::vector<int>::*)(const size_t) const>(&std::vector<int>::at, 3),
         4);
     // clang-format on
+}
+
+TEST(Class_sync, Test2) {
+    parallelization::sync<std::vector<int>> s_vec{ 1, 2, 3 };
+    {
+        // in this, we create one instance of sync::owner class and take exclusive access to the object
+	    auto owner = s_vec.getOwner();
+        owner.get().push_back(4);
+    	// ... do too many operations
+        owner.get().push_back(5);
+    }
 }
 
 TEST(Parallelization_optional, Test_1) {
