@@ -6,32 +6,11 @@
 
 TEST(Class_sync, Test1) {
     parallelization::sync<std::vector<int>> s_vec{ 1, 2, 3 };
-
-    // clang-format off
-	// because method std::vector<int>::size hasn't any overloads there is possible to not define first template parameter clearly
-    size_t s = s_vec.invoke(&std::vector<int>::size);
-	
-	// because method std::vector<int>::push_back has two overloads by argument type there is need to define first template parameter clearly
-    s_vec.invoke<void (std::vector<int>::*)(const int&)>(&std::vector<int>::push_back, 4);
-
-	// because method std::vector<int>::at has two overloads by returned type there is need to define first template parameter clearly
-    ASSERT_EQ(
-        s_vec.invoke<int& (std::vector<int>::*)(const size_t)>(&std::vector<int>::at, 3),
-        4);
-    ASSERT_EQ(
-        s_vec.invoke<const int& (std::vector<int>::*)(const size_t) const>(&std::vector<int>::at, 3),
-        4);
-    // clang-format on
-}
-
-TEST(Class_sync, Test2) {
-    parallelization::sync<std::vector<int>> s_vec{ 1, 2, 3 };
     {
         // in this, we create one instance of sync::owner class and take exclusive access to the object
-	    auto owner = s_vec.getOwner();
-        owner.get().push_back(4);
+        s_vec.getOwner().getObj().push_back(4);
     	// ... do too many operations
-        owner.get().push_back(5);
+        s_vec.getOwner().getObj().push_back(5);
     }
 }
 

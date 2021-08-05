@@ -10,7 +10,7 @@ namespace parallelization {
 
         class owner {
             friend class sync;
-        	
+
             std::mutex& d_own_access;
             ObjType& d_own_object;
 
@@ -25,7 +25,11 @@ namespace parallelization {
                 d_own_access.unlock();
             }
 
-            ObjType& get() {
+            [[nodiscard]] constexpr ObjType& getObj() {
+                return d_own_object;
+            }
+
+            [[nodiscard]] constexpr const ObjType& getObj() const {
                 return d_own_object;
             }
         };
@@ -34,12 +38,6 @@ namespace parallelization {
         template<class... ArgsTypes>
         sync(ArgsTypes&&... args)
             : d_object{ std::forward<ArgsTypes>(args)... } {};
-
-        template<class MemberFunc, class... ArgsTypes>
-        auto invoke(MemberFunc func, ArgsTypes&&... args) {
-            std::lock_guard locker{ d_access };
-            return (d_object.*func)(std::forward<ArgsTypes>(args)...);
-        }
 
         owner getOwner() {
             return owner{ d_access, d_object };
