@@ -1,86 +1,74 @@
 ﻿#include "test-common.hpp"
 
-#include <list>
-#include <array>
-#include <vector>
-#include <stack>
-#include <queue>
-#include <optional>
+#include "parallelization/sync.h"
+#include "parallelization/list.h"
+#include "parallelization/optional.h"
 
-using namespace std;
 
-class Parent {
-    protected:
-    string m_name;
+TEST(Class_sync, Test1) {
+    parallelization::sync<std::vector<int>> s_vec{ 1, 2, 3 };
 
-    public:
-    Parent(string name)
-        : m_name(name) {}
-
-    virtual ~Parent() {}
-};
-
-class Child1 : public Parent {
-    protected:
-    string m_patronymic;
-
-    public:
-    Child1(string name, string patronymic)
-        : Parent(name)
-        , m_patronymic(patronymic) {}
-    const string& getName() {
-        return m_name;
-    }
-};
-
-class Child2 : public Parent {
-    protected:
-    string m_patronymic;
-
-    public:
-    Child2(string name, string patronymic)
-        : Parent(name)
-        , m_patronymic(patronymic) {}
-    const string& getName() {
-        return m_name;
-    }
-};
-
-Parent* Create1() {
-    return new Child1("Alex", "Mike");
-};
-
-Parent* Create2() {
-    return new Child2("Alex", "Mike");
-};
-
-TEST(Test1, Simple1) {
-    using MyINT = int;
-	using vector_int = std::vector<int>;
-	//std::string
+    // clang-format off
+	// because method std::vector<int>::size hasn't any overloads there is possible to not define first template parameter clearly
+    size_t s = s_vec.invoke(&std::vector<int>::size);
 	
-    // используем dynamic_cast для конвертации указателя класса Parent в указатель класса Child
-    Parent* p1 = Create1();
-    Child1* ch1 = dynamic_cast<Child1*>(p1);
-	ASSERT_NE(ch1, nullptr);
+	// because method std::vector<int>::push_back has two overloads by argument type there is need to define first template parameter clearly
+    s_vec.invoke<void (std::vector<int>::*)(const int&)>(&std::vector<int>::push_back, 4);
 
-	Parent* p2 = Create2();
-    Child1* ch2 = dynamic_cast<Child1*>(p2);
-    ASSERT_EQ(ch2, nullptr);
+	// because method std::vector<int>::at has two overloads by returned type there is need to define first template parameter clearly
+    ASSERT_EQ(
+        s_vec.invoke<int& (std::vector<int>::*)(const size_t)>(&std::vector<int>::at, 3),
+        4);
+    ASSERT_EQ(
+        s_vec.invoke<const int& (std::vector<int>::*)(const size_t) const>(&std::vector<int>::at, 3),
+        4);
+    // clang-format on
 }
 
-template<class Type, template<class> class Base>
-struct A : Base<Type> {
-    Base<Type> container;
-};
+TEST(Parallelization_optional, Test_1) {
+    parallelization::optional<int> opt_i{ 3 };
+    ASSERT_EQ(opt_i, 3);
+    opt_i = 4;
+    ASSERT_EQ(opt_i, 4);
+    int i = opt_i;
+    ASSERT_EQ(i, 4);
+    i = 5;
+    ASSERT_EQ(i, 5);
+    ASSERT_EQ(opt_i, 4);
+}
 
-template<class Base>
-struct B {
-    Base container;
-};
+TEST(Parallelization_optional, Test_2) {
+    parallelization::optional<int> opt_i{ 4 };
+    int& i = opt_i;
+    ASSERT_EQ(opt_i, 4);
+    ASSERT_EQ(i, 4);
+    i = 5;
+    ASSERT_EQ(i, 5);
+    ASSERT_EQ(opt_i, 5);
+}
 
-TEST(Test1, Simple2) {
-    std::list<int> list;
-    A<int, std::list> a;
-    B<std::list<int>> b;
+TEST(Parallelization_optional, Test_3) {
+    using vector_str = std::vector<std::string>;
+    using vector_str_it = vector_str::iterator;
+
+    vector_str strs{ "str1", "str2", "str3" };
+
+    parallelization::optional<vector_str_it> itB{ strs.begin() };
+    parallelization::optional<vector_str_it> itE{ strs.end() };
+
+    std::for_each<vector_str_it>(itB, itE, [](const std::string& str) {
+        bool condition = (str == "str1") || (str == "str2") || (str == "str3");
+        ASSERT_TRUE(condition);
+    });
+
+    std::for_each<vector_str_it>(itB, itE, [](std::string str) {
+        bool condition = (str == "str1") || (str == "str2") || (str == "str3");
+        ASSERT_TRUE(condition);
+    });
+}
+
+TEST(Parallelization, Test2) {
+    parallelization::list<int> plist{ 1, 2, 3, 4 };
+    auto beg = plist.begin();
+    beg.operator*();
 }

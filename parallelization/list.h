@@ -1,12 +1,16 @@
 #pragma once
+
 #include "_base_container.h"
+
+#include "lockers/_standart_lockrer.h"
+
 #include "members/_iterators.h"
 #include "members/_capacity.h"
 
 namespace parallelization {
-    template<class ElementType, class... ContainerSettingsTypes>
+    template<class ElementType, class LockerType = _StandartLocker, class... ContainerSettingsTypes>
     struct list
-#define BASE_CONTAINER_TYPE _BaseContainer<ElementType, std::list, ContainerSettingsTypes...>
+#define BASE_CONTAINER_TYPE _BaseContainer<ElementType, LockerType, std::list, ContainerSettingsTypes...>
         : virtual BASE_CONTAINER_TYPE
         , members_map::_Iterators_begin_end<BASE_CONTAINER_TYPE>
         , members_map::_Iterators_cbegin_cend<BASE_CONTAINER_TYPE>
