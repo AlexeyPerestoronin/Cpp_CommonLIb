@@ -1,16 +1,17 @@
 ﻿#include "test-common.hpp"
 
-#include "parallelization/sync.h"
+#include "parallelization/execute_around.h"
 #include "parallelization/list.h"
 #include "parallelization/optional.h"
 
 TEST(Class_sync, Test1) {
-    parallelization::sync<std::vector<int>> s_vec{ 1, 2, 3 };
+    parallelization::sync_executor<std::vector<int>> s_vec{ 1, 2, 3 };
     {
-        // in this, we create one instance of sync::owner class and take exclusive access to the object
-        s_vec.getOwner().getObj().push_back(4);
+        // in this, we create one instance of execute_around::synchronizer class and take exclusive access to the object
+        s_vec.get_wrapper()->push_back(4);
+        auto owner = s_vec.get_wrapper();
     	// ... do too many operations
-        s_vec.getOwner().getObj().push_back(5);
+        s_vec.get_wrapper()->push_back(5);
     }
 }
 
